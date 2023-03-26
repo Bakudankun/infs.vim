@@ -54,7 +54,7 @@ function infs#start(...)
   else
     lclose
     silent ll
-    normal! zzzO
+    silent! normal! zzzO
   endif
 endfunction
 
