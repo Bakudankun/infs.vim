@@ -38,6 +38,7 @@ function infs#start(...)
   augroup END
 
   call s:do_user_autocmd('InfsInputPre')
+  let s:buffer = getline(1, '$')->map({ i, v -> #{text: v, bufnr: bufnr(), lnum: i + 1} })
   const cancelled = empty(input('query: ', get(a:, '1', '')))
   call s:do_user_autocmd('InfsInputPost')
 
@@ -75,9 +76,7 @@ function s:udpate_loclist(query) abort
     return
   endif
   const bufnr = bufnr()
-  const items = getline(1, '$')
-        \ ->map({ i, v -> #{text: v, bufnr: bufnr, lnum: i + 1} })
-        \ ->matchfuzzy(a:query, #{key: 'text'})
+  const items = s:buffer->matchfuzzy(a:query, #{key: 'text'})
 
   call setloclist(0, [], 'r', #{
         \   title: 'infs: ' .. a:query,
