@@ -75,7 +75,6 @@ function s:udpate_loclist(query) abort
   if getchar(1) !=# 0
     return
   endif
-  const bufnr = bufnr()
   const items = s:buffer->matchfuzzy(a:query, #{key: 'text'})
 
   call setloclist(0, [], 'r', #{
