@@ -18,11 +18,11 @@ function infs#start(...)
   let orig_maps = {}
   for item in s:get_config('map.next', ['<C-N>'])
     let orig_maps[item] = maparg(item, 'c', 0, 1)
-    execute 'cnoremap <buffer>' item '<Cmd>silent! lnext<CR><Cmd>normal! zz<CR><Cmd>redraw<CR>'
+    execute 'cnoremap <buffer>' item '<Cmd>silent! keepjumps lnext<CR><Cmd>normal! zz<CR><Cmd>redraw<CR>'
   endfor
   for item in s:get_config('map.previous', ['<C-P>'])
     let orig_maps[item] = maparg(item, 'c', 0, 1)
-    execute 'cnoremap <buffer>' item '<Cmd>silent! lprevious<CR><Cmd>normal! zz<CR><Cmd>redraw<CR>'
+    execute 'cnoremap <buffer>' item '<Cmd>silent! keepjumps lprevious<CR><Cmd>normal! zz<CR><Cmd>redraw<CR>'
   endfor
   for item in s:get_config('map.cancel', [])
     let orig_maps[item] = maparg(item, 'c', 0, 1)
@@ -86,7 +86,7 @@ function s:udpate_loclist(query) abort
   if empty(items)
     call winrestview(s:saveview)
   else
-    ll
+    keepjumps ll
     normal! zz
   endif
   redraw
